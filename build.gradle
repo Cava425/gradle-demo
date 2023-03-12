@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.6'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'com.example.gradle'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+}
+
+dependencies {
+    // implementation 将指定的依赖添加到编译路径,并将该依赖打包输出,但在编译是不会暴露给其他模块
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // 将指定的依赖添加到编译路径,但是不会被打包,且依赖不会被传递
+    compileOnly 'org.projectlombok:lombok'
+    // 用于注解处理器的依赖
+    annotationProcessor 'org.projectlombok:lombok'
+    // 在测试编译 运行时可见,类似于maven test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
